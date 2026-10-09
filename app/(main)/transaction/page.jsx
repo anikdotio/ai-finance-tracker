@@ -5,6 +5,7 @@ import { BarLoader } from "react-spinners";
 import { Button } from "@/components/ui/button";
 import { getUserTransactions } from "@/actions/transaction";
 import { TransactionTable } from "@/app/(main)/account/_components/transaction-table";
+export const dynamic = "force-dynamic";
 
 export default async function TransactionsPage() {
   const result = await getUserTransactions();

@@ -1,6 +1,7 @@
 import React from "react";
 import { getUserTransactions } from "@/actions/transaction";
 import { AnalyticsTrendsClient } from "./_components/analytics-client";
+export const dynamic = "force-dynamic";
 
 export default async function AnalyticsPage() {
   const result = await getUserTransactions();
