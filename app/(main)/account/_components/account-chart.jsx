@@ -8,11 +8,9 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 import { format, subDays, startOfDay, endOfDay } from "date-fns";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -76,16 +74,21 @@ export function AccountChart({ transactions }) {
   }, [filteredData]);
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-7">
-        <CardTitle className="text-base font-normal">
-          Transaction Overview
-        </CardTitle>
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#1E1F24]">
+        <div>
+          <h3 className="font-serif text-lg text-[#F4F0E6]">
+            Movement Analysis
+          </h3>
+          <p className="text-xs text-[#8E8E93] font-mono">
+            Calibrated daily inflow vs outflow
+          </p>
+        </div>
         <Select defaultValue={dateRange} onValueChange={setDateRange}>
-          <SelectTrigger className="w-[140px]">
+          <SelectTrigger className="w-[140px] h-8 bg-[#16171B] border-[#26272D] text-xs text-[#C6C7CC] rounded-lg">
             <SelectValue placeholder="Select range" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-[#16171B] border-[#26272D] text-[#F4F0E6] text-xs">
             {Object.entries(DATE_RANGES).map(([key, { label }]) => (
               <SelectItem key={key} value={key}>
                 {label}
@@ -93,78 +96,81 @@ export function AccountChart({ transactions }) {
             ))}
           </SelectContent>
         </Select>
-      </CardHeader>
-      <CardContent>
-        <div className="flex justify-around mb-6 text-sm">
-          <div className="text-center">
-            <p className="text-muted-foreground">Total Income</p>
-            <p className="text-lg font-bold text-green-500">
-              ${totals.income.toFixed(2)}
-            </p>
-          </div>
-          <div className="text-center">
-            <p className="text-muted-foreground">Total Expenses</p>
-            <p className="text-lg font-bold text-red-500">
-              ${totals.expense.toFixed(2)}
-            </p>
-          </div>
-          <div className="text-center">
-            <p className="text-muted-foreground">Net</p>
-            <p
-              className={`text-lg font-bold ${
-                totals.income - totals.expense >= 0
-                  ? "text-green-500"
-                  : "text-red-500"
-              }`}
-            >
-              ${(totals.income - totals.expense).toFixed(2)}
-            </p>
-          </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4">
+        <div className="p-3 rounded-lg bg-[#16171B] border border-[#212226]">
+          <p className="text-[10px] font-mono uppercase text-[#71727A]">Total Inflow</p>
+          <p className="text-base sm:text-lg font-mono font-medium text-[#48BB78]">
+            +${totals.income.toFixed(2)}
+          </p>
         </div>
-        <div className="h-[300px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={filteredData}
-              margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis
-                dataKey="date"
-                fontSize={12}
-                tickLine={false}
-                axisLine={false}
-              />
-              <YAxis
-                fontSize={12}
-                tickLine={false}
-                axisLine={false}
-                tickFormatter={(value) => `$${value}`}
-              />
-              <Tooltip
-                formatter={(value) => [`$${value}`, undefined]}
-                contentStyle={{
-                  backgroundColor: "hsl(var(--popover))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "var(--radius)",
-                }}
-              />
-              <Legend />
-              <Bar
-                dataKey="income"
-                name="Income"
-                fill="#22c55e"
-                radius={[4, 4, 0, 0]}
-              />
-              <Bar
-                dataKey="expense"
-                name="Expense"
-                fill="#ef4444"
-                radius={[4, 4, 0, 0]}
-              />
-            </BarChart>
-          </ResponsiveContainer>
+        <div className="p-3 rounded-lg bg-[#16171B] border border-[#212226]">
+          <p className="text-[10px] font-mono uppercase text-[#71727A]">Total Outflow</p>
+          <p className="text-base sm:text-lg font-mono font-medium text-[#E05A47]">
+            -${totals.expense.toFixed(2)}
+          </p>
         </div>
-      </CardContent>
-    </Card>
+        <div className="p-3 rounded-lg bg-[#16171B] border border-[#212226]">
+          <p className="text-[10px] font-mono uppercase text-[#71727A]">Net Balance</p>
+          <p
+            className={`text-base sm:text-lg font-mono font-medium ${
+              totals.income - totals.expense >= 0
+                ? "text-[#48BB78]"
+                : "text-[#E05A47]"
+            }`}
+          >
+            {totals.income - totals.expense >= 0 ? "+" : ""}${(totals.income - totals.expense).toFixed(2)}
+          </p>
+        </div>
+      </div>
+
+      <div className="h-[260px] w-full pt-2">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={filteredData}
+            margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1F2025" />
+            <XAxis
+              dataKey="date"
+              fontSize={11}
+              stroke="#5C5D63"
+              tickLine={false}
+              axisLine={{ stroke: "#212226" }}
+            />
+            <YAxis
+              fontSize={11}
+              stroke="#5C5D63"
+              tickLine={false}
+              axisLine={{ stroke: "#212226" }}
+              tickFormatter={(value) => `$${value}`}
+            />
+            <Tooltip
+              formatter={(value) => [`$${value.toFixed(2)}`, undefined]}
+              contentStyle={{
+                backgroundColor: "#16171B",
+                border: "1px solid #2B2C33",
+                borderRadius: "8px",
+                color: "#F4F0E6",
+                fontSize: "12px",
+              }}
+            />
+            <Bar
+              dataKey="income"
+              name="Inflow"
+              fill="#48BB78"
+              radius={[3, 3, 0, 0]}
+            />
+            <Bar
+              dataKey="expense"
+              name="Outflow"
+              fill="#E05A47"
+              radius={[3, 3, 0, 0]}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
   );
 }

@@ -47,20 +47,20 @@ export function ReceiptScanner({ onScanComplete }) {
       />
       <Button
         type="button"
-        variant="outline"
-        className="w-full h-10 bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 animate-gradient hover:opacity-90 transition-opacity text-white hover:text-white"
+        variant="dark"
+        className="w-full h-11 bg-[#16171B] border border-[#2D2E35] text-[#F4F0E6] hover:bg-[#1E1F24] transition-colors rounded-lg flex items-center justify-center gap-2 font-mono text-xs shadow-sm"
         onClick={() => fileInputRef.current?.click()}
         disabled={scanReceiptLoading}
       >
         {scanReceiptLoading ? (
           <>
-            <Loader2 className="mr-2 animate-spin" />
-            <span>Scanning Receipt...</span>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin text-[#EAE0D5]" />
+            <span>Scanning & Parsing Receipt...</span>
           </>
         ) : (
           <>
-            <Camera className="mr-2" />
-            <span>Scan Receipt with AI</span>
+            <Camera className="mr-2 h-4 w-4 text-[#EAE0D5]" />
+            <span>Instant Receipt OCR Scan</span>
           </>
         )}
       </Button>

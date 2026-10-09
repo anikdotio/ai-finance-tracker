@@ -1,19 +1,11 @@
 "use client";
 
-import { ArrowUpRight, ArrowDownRight } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
-import { useEffect } from "react";
-import useFetch from "@/hooks/use-fetch";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import React, { useEffect } from "react";
 import Link from "next/link";
-import { updateDefaultAccount } from "@/actions/account";
+import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import useFetch from "@/hooks/use-fetch";
+import { updateDefaultAccount } from "@/actions/account";
 
 export function AccountCard({ account }) {
   const { name, type, balance, id, isDefault } = account;
@@ -25,12 +17,13 @@ export function AccountCard({ account }) {
     error,
   } = useFetch(updateDefaultAccount);
 
-  const handleDefaultChange = async (event) => {
-    event.preventDefault(); // Prevent navigation
+  const handleMakeDefault = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
     if (isDefault) {
-      toast.warning("You need atleast 1 default account");
-      return; // Don't allow toggling off the default account
+      toast.info("This is already your primary vault");
+      return;
     }
 
     await updateDefaultFn(id);
@@ -38,48 +31,80 @@ export function AccountCard({ account }) {
 
   useEffect(() => {
     if (updatedAccount?.success) {
-      toast.success("Default account updated successfully");
+      toast.success("Default vault updated successfully");
     }
   }, [updatedAccount]);
 
   useEffect(() => {
     if (error) {
-      toast.error(error.message || "Failed to update default account");
+      toast.error(error.message || "Failed to update default vault");
     }
   }, [error]);
 
   return (
-    <Card className="hover:shadow-md transition-shadow group relative">
-      <Link href={`/account/${id}`}>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium capitalize">
+    <div className="bg-[#121316] border border-[#212226] rounded-xl p-6 shadow-sm hover:border-[#2D2E35] transition-all space-y-5 group">
+      {/* Top row: Title, Type & USD Badge (Reference 10) */}
+      <div className="flex items-start justify-between">
+        <div>
+          <Link
+            href={`/account/${id}`}
+            className="font-medium text-base text-[#F4F0E6] hover:text-white transition-colors block"
+          >
             {name}
-          </CardTitle>
-          <Switch
-            checked={isDefault}
-            onClick={handleDefaultChange}
-            disabled={updateDefaultLoading}
-          />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold">
-            ${parseFloat(balance).toFixed(2)}
+          </Link>
+          <div className="text-[10px] font-mono text-[#71727A] uppercase mt-0.5">
+            {type} {isDefault ? "· PRIMARY VAULT" : ""}
           </div>
-          <p className="text-xs text-muted-foreground">
-            {type.charAt(0) + type.slice(1).toLowerCase()} Account
-          </p>
-        </CardContent>
-        <CardFooter className="flex justify-between text-sm text-muted-foreground">
-          <div className="flex items-center">
-            <ArrowUpRight className="mr-1 h-4 w-4 text-green-500" />
-            Income
-          </div>
-          <div className="flex items-center">
-            <ArrowDownRight className="mr-1 h-4 w-4 text-red-500" />
-            Expense
-          </div>
-        </CardFooter>
-      </Link>
-    </Card>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {isDefault && (
+            <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#C29B38]/15 text-[#C29B38] border border-[#C29B38]/30">
+              DEFAULT
+            </span>
+          )}
+          <span className="text-[10px] font-mono border border-[#2B2C33] text-[#71727A] px-1.5 py-0.5 rounded">
+            USD
+          </span>
+        </div>
+      </div>
+
+      {/* Balance (Reference 10) */}
+      <div>
+        <div className="font-mono text-3xl font-medium tracking-tight text-[#F4F0E6]">
+          ${parseFloat(balance).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        </div>
+      </div>
+
+      {/* Bottom Action Links (Reference 10) */}
+      <div className="pt-3 border-t border-[#1C1D22] flex items-center justify-between text-xs font-mono text-[#8E8E93]">
+        <div className="flex items-center gap-3">
+          <Link
+            href={`/transaction/create?accountId=${id}`}
+            className="hover:text-[#F4F0E6] transition-colors flex items-center gap-1 text-[11px]"
+          >
+            <span>+ New entry</span>
+          </Link>
+
+          {!isDefault && (
+            <button
+              onClick={handleMakeDefault}
+              disabled={updateDefaultLoading}
+              className="hover:text-[#F4F0E6] transition-colors text-[11px] text-[#71727A]"
+            >
+              Make default
+            </button>
+          )}
+        </div>
+
+        <Link
+          href={`/account/${id}`}
+          className="text-[#71727A] hover:text-[#F4F0E6] transition-colors"
+          title="View ledger"
+        >
+          <ArrowRight size={14} />
+        </Link>
+      </div>
+    </div>
   );
 }

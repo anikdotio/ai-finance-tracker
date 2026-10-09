@@ -1,11 +1,10 @@
-import { getUserAccounts } from "@/actions/dashboard";
-import { getDashboardData } from "@/actions/dashboard";
-import { getCurrentBudget } from "@/actions/budget";
-import { AccountCard } from "./_components/account-card";
-import { CreateAccountDrawer } from "@/components/create-account-drawer";
-import { BudgetProgress } from "./_components/budget-progress";
-import { Card, CardContent } from "@/components/ui/card";
+import React from "react";
+import Link from "next/link";
+import { format } from "date-fns";
 import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { getUserAccounts, getDashboardData } from "@/actions/dashboard";
+import { getCurrentBudget } from "@/actions/budget";
 import { DashboardOverview } from "./_components/transaction-overview";
 
 export default async function DashboardPage() {
@@ -14,43 +13,45 @@ export default async function DashboardPage() {
     getDashboardData(),
   ]);
 
-  const defaultAccount = accounts?.find((account) => account.isDefault);
+  const defaultAccount = accounts?.find((account) => account.isDefault) || accounts?.[0];
 
-  // Get budget for default account
   let budgetData = null;
   if (defaultAccount) {
     budgetData = await getCurrentBudget(defaultAccount.id);
   }
 
+  const currentMonthName = format(new Date(), "MMMM");
+
   return (
     <div className="space-y-8">
-      {/* Budget Progress */}
-      <BudgetProgress
-        initialBudget={budgetData?.budget}
-        currentExpenses={budgetData?.currentExpenses || 0}
-      />
+      {/* Reference 6 Header: Overview & + New entry */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="font-serif text-3xl sm:text-4xl text-[#F4F0E6] font-normal">
+            Overview
+          </h1>
+          <p className="text-xs sm:text-sm text-[#8E8E93] mt-1 font-mono">
+            Your position at a glance — {currentMonthName}
+          </p>
+        </div>
 
-      {/* Dashboard Overview */}
-      <DashboardOverview
-        accounts={accounts}
-        transactions={transactions || []}
-      />
-
-      {/* Accounts Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <CreateAccountDrawer>
-          <Card className="hover:shadow-md transition-shadow cursor-pointer border-dashed">
-            <CardContent className="flex flex-col items-center justify-center text-muted-foreground h-full pt-5">
-              <Plus className="h-10 w-10 mb-2" />
-              <p className="text-sm font-medium">Add New Account</p>
-            </CardContent>
-          </Card>
-        </CreateAccountDrawer>
-        {accounts.length > 0 &&
-          accounts?.map((account) => (
-            <AccountCard key={account.id} account={account} />
-          ))}
+        <Link href="/transaction/create">
+          <Button
+            variant="cream"
+            className="text-xs font-medium h-9 px-4 rounded-md gap-1.5 shadow-sm"
+          >
+            <Plus size={14} className="stroke-[2.5]" />
+            <span>New entry</span>
+          </Button>
+        </Link>
       </div>
+
+      {/* Complete Dashboard Overview (Stats, Chart, Breakdown, Vaults, Filterable Ledger) */}
+      <DashboardOverview
+        accounts={accounts || []}
+        transactions={transactions || []}
+        budgetData={budgetData}
+      />
     </div>
   );
 }

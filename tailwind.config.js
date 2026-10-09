@@ -8,7 +8,31 @@ module.exports = {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			serif: ["var(--font-serif)", "Newsreader", "Playfair Display", "Georgia", "serif"],
+  			sans: ["var(--font-sans)", "Inter", "sans-serif"],
+  		},
   		colors: {
+  			ledger: {
+  				bg: "#0C0D0E",
+  				surface: "#111215",
+  				card: "#131417",
+  				cardHover: "#17181D",
+  				border: "#212226",
+  				borderSubtle: "#1B1C20",
+  				borderFocus: "#3A3B42",
+  				cream: "#EAE0D5",
+  				creamHover: "#F3EDE4",
+  				creamText: "#0E0F11",
+  				text: "#F4F0E6",
+  				textMuted: "#8E8E93",
+  				textDim: "#5C5D63",
+  				coral: "#E05A47",
+  				coralBg: "rgba(224, 90, 71, 0.12)",
+  				green: "#48BB78",
+  				greenBg: "rgba(72, 187, 120, 0.12)",
+  				gold: "#C29B38",
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

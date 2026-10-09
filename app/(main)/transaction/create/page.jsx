@@ -14,16 +14,26 @@ export default async function AddTransactionPage({ searchParams }) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-5">
-      <div className="flex justify-center md:justify-normal mb-8">
-        <h1 className="text-5xl gradient-title ">Add Transaction</h1>
+    <div className="max-w-3xl mx-auto space-y-6">
+      <div className="space-y-1">
+        <h1 className="font-serif text-3xl sm:text-4xl text-[#F4F0E6] font-normal">
+          {editId ? "Edit Ledger Entry" : "Record Movement"}
+        </h1>
+        <p className="text-xs sm:text-sm text-[#8E8E93] font-mono">
+          {editId
+            ? "Adjust the recorded details of this transaction."
+            : "Enter details manually or scan a paper receipt to parse and reconcile."}
+        </p>
       </div>
-      <AddTransactionForm
-        accounts={accounts}
-        categories={defaultCategories}
-        editMode={!!editId}
-        initialData={initialData}
-      />
+
+      <div className="bg-[#121316] border border-[#212226] rounded-xl p-6 sm:p-8 shadow-sm">
+        <AddTransactionForm
+          accounts={accounts}
+          categories={defaultCategories}
+          editMode={!!editId}
+          initialData={initialData}
+        />
+      </div>
     </div>
   );
 }

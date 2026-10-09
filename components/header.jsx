@@ -2,83 +2,85 @@ import React from "react";
 import { Button } from "./ui/button";
 import { PenBox, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { checkUser } from "@/lib/checkUser";
-import Image from "next/image";
 
 const Header = async () => {
   await checkUser();
 
   return (
-    <header className="fixed top-0 w-full bg-[#0B0B0C]/85 backdrop-blur-md z-50 border-b border-[#2A2A2D]">
-      <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/">
-          <Image
-            src={"/Screenshot 2026-07-29 220347.png"}
-            alt="PennyPal Logo"
-            width={200}
-            height={60}
-            className="h-12 w-auto object-contain"
-          />
+    <header className="fixed top-0 w-full bg-[#0C0D0E]/85 backdrop-blur-md z-50 border-b border-[#1E1F24]">
+      <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        {/* Brand */}
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="w-7 h-7 rounded border border-[#2D2E35] bg-[#141518] flex items-center justify-center font-serif text-[#F4F0E6] text-sm font-semibold">
+            L
+          </div>
+          <span className="font-serif text-lg tracking-normal text-[#F4F0E6]">Ledger</span>
         </Link>
 
-        <div className="hidden md:flex items-center space-x-8">
-          <SignedOut>
-            <a
-              href="#features"
-              className="text-[#F3E7B3]/70 hover:text-[#D4AF37]"
-            >
-              Features
-            </a>
-            <a
-              href="#testimonials"
-              className="text-[#F3E7B3]/70 hover:text-[#D4AF37]"
-            >
-              Testimonials
-            </a>
-          </SignedOut>
+        {/* Center Links (Reference 1) */}
+        <div className="hidden md:flex items-center space-x-8 text-sm text-[#8E8E93]">
+          <a href="#capabilities" className="hover:text-[#F4F0E6] transition-colors">
+            Capabilities
+          </a>
+          <a href="#receipt-scanner" className="hover:text-[#F4F0E6] transition-colors">
+            Receipt Scanner
+          </a>
+          <a href="#how-it-works" className="hover:text-[#F4F0E6] transition-colors">
+            How it works
+          </a>
         </div>
 
+        {/* Right Actions */}
         <div className="flex items-center space-x-4">
           <SignedIn>
-            <Link
-              href="/dashboard"
-              className="text-[#F3E7B3]/70 hover:text-[#D4AF37] flex items-center gap-2"
-            >
+            <Link href="/dashboard">
               <Button
-                variant="outline"
-                className="border-[#D4AF37]/40 bg-transparent text-[#F3E7B3] hover:bg-[#D4AF37]/10"
+                variant="dark"
+                size="sm"
+                className="text-xs h-8 px-3 text-[#F4F0E6] gap-2"
               >
-                <LayoutDashboard size={18} />
-                <span className="hidden md:inline">Dashboard</span>
+                <LayoutDashboard size={14} />
+                <span>Dashboard</span>
               </Button>
             </Link>
-            <a href="/transaction/create">
-              <Button className="flex items-center gap-2 bg-[#D4AF37] text-[#0B0B0C] hover:bg-[#F3E7B3]">
-                <PenBox size={18} />
-                <span className="hidden md:inline">Add Transaction</span>
-              </Button>
-            </a>
-          </SignedIn>
-          <SignedOut>
-            <SignInButton forceRedirectUrl="/dashboard">
+            <Link href="/transaction/create">
               <Button
-                variant="outline"
-                className="border-[#D4AF37]/40 bg-transparent text-[#F3E7B3] hover:bg-[#D4AF37]/10"
+                variant="cream"
+                size="sm"
+                className="text-xs h-8 px-3 gap-1.5"
               >
-                Login
+                <PenBox size={14} />
+                <span>Add Transaction</span>
               </Button>
-            </SignInButton>
-          </SignedOut>
-          <SignedIn>
+            </Link>
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: "w-10 h-10",
+                  avatarBox: "w-8 h-8 rounded-full border border-[#2D2E35]",
                 },
               }}
             />
           </SignedIn>
+
+          <SignedOut>
+            <Link
+              href="/sign-in"
+              className="text-xs text-[#8E8E93] hover:text-[#F4F0E6] transition-colors font-medium px-2"
+            >
+              Sign in
+            </Link>
+            <Link href="/sign-up">
+              <Button
+                variant="cream"
+                size="sm"
+                className="text-xs h-8 px-3.5 font-medium rounded"
+              >
+                Open Ledger
+              </Button>
+            </Link>
+          </SignedOut>
         </div>
       </nav>
     </header>

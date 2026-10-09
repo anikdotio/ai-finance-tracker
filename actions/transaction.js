@@ -312,6 +312,7 @@ export async function getUserTransactions() {
 
     const user = await db.user.findUnique({
       where: { clerkUserId: userId },
+      select: { id: true },
     });
 
     if (!user) {
@@ -330,14 +331,26 @@ export async function getUserTransactions() {
       },
     });
 
+    const serializedTransactions = transactions.map((transaction) => ({
+      ...transaction,
+      amount: transaction.amount.toNumber(),
+      account: transaction.account
+        ? {
+            ...transaction.account,
+            balance: transaction.account.balance.toNumber(),
+          }
+        : null,
+    }));
+
     return {
       success: true,
-      data: transactions,
+      data: serializedTransactions,
     };
   } catch (error) {
     throw new Error(error.message);
   }
 }
+
 
 // Scan Receipt
 export async function scanReceipt(file) {
