@@ -6,6 +6,10 @@ const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
   "/account(.*)",
   "/transaction(.*)",
+  "/budget(.*)",
+  "/goals(.*)",
+  "/analytics(.*)",
+  "/preferences(.*)",
 ]);
 
 // Create Arcjet middleware
@@ -35,6 +39,16 @@ const clerk = clerkMiddleware(async (auth, req) => {
   if (!userId && isProtectedRoute(req)) {
     const { redirectToSignIn } = await auth();
     return redirectToSignIn();
+  }
+
+  // Redirect authenticated users from landing page and auth pages directly to dashboard
+  if (
+    userId &&
+    (req.nextUrl.pathname === "/" ||
+      req.nextUrl.pathname.startsWith("/sign-in") ||
+      req.nextUrl.pathname.startsWith("/sign-up"))
+  ) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   return NextResponse.next();

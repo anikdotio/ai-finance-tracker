@@ -95,11 +95,8 @@ export async function createAccount(data) {
       throw new Error("User not found");
     }
 
-    const balanceFloat = Number(data.balance);
-
-    if (!Number.isFinite(balanceFloat)) {
-      throw new Error("Invalid balance amount");
-    }
+    const balanceFloat = data.balance ? Number(data.balance) : 0;
+    const safeBalance = Number.isFinite(balanceFloat) ? balanceFloat : 0;
 
     if (!data.name || typeof data.name !== "string") {
       throw new Error("Account name is required");
@@ -137,7 +134,7 @@ export async function createAccount(data) {
         data: {
           name: data.name.trim(),
           type: data.type,
-          balance: balanceFloat,
+          balance: safeBalance,
           userId: user.id,
           isDefault: shouldBeDefault,
         },

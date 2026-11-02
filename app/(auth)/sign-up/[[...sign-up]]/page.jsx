@@ -47,6 +47,10 @@ export default function SignUpPage() {
 
         <div className="w-full max-w-sm space-y-6 pt-16 lg:pt-0">
           <SignUp
+            forceRedirectUrl="/dashboard"
+            fallbackRedirectUrl="/dashboard"
+            signInForceRedirectUrl="/dashboard"
+            signInFallbackRedirectUrl="/dashboard"
             appearance={{
               elements: {
                 rootBox: "w-full",

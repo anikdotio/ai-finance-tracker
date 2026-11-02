@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { CreateAccountDrawer } from "@/components/create-account-drawer";
 import { AccountCard } from "@/app/(main)/dashboard/_components/account-card";
 
+export const dynamic = "force-dynamic";
+
 export default async function AccountsVaultsPage() {
   const accounts = await getUserAccounts();
 
@@ -48,11 +50,17 @@ export default async function AccountsVaultsPage() {
       </div>
 
       {/* Reference 10: Vaults Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {accounts.map((account) => (
-          <AccountCard key={account.id} account={account} />
-        ))}
-      </div>
+      {accounts.length === 0 ? (
+        <div className="py-16 text-center text-xs font-mono text-[#71727A] border border-[#212226] rounded-xl bg-[#121316]">
+          No vaults established yet. Open your first vault above.
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {accounts.map((account) => (
+            <AccountCard key={account.id} account={account} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

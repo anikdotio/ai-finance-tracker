@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useUser, UserButton } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 import { Plus, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -20,7 +20,6 @@ const breadcrumbMap = {
 
 export function AppHeader({ onOpenMobile }) {
   const pathname = usePathname();
-  const { user } = useUser();
 
   // Find matching breadcrumb
   let title = "Overview";

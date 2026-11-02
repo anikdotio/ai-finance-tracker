@@ -1,20 +1,6 @@
-import { Inter, Newsreader } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
-  display: "swap",
-});
 
 export const metadata = {
   title: "Ledger — Personal Finance, Precisely",
@@ -29,7 +15,7 @@ export default function RootLayout({ children }) {
           <link rel="icon" href="/logo-sm.png" sizes="any" />
         </head>
         <body
-          className={`${inter.variable} ${newsreader.variable} bg-[#0C0D0E] text-[#F4F0E6] font-sans antialiased min-h-screen selection:bg-[#EAE0D5] selection:text-[#0C0D0E]`}
+          className="bg-[#0C0D0E] text-[#F4F0E6] font-sans antialiased min-h-screen selection:bg-[#EAE0D5] selection:text-[#0C0D0E]"
         >
           {children}
           <Toaster

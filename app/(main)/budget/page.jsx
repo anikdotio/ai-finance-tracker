@@ -4,6 +4,8 @@ import { getUserAccounts, getDashboardData } from "@/actions/dashboard";
 import { getCurrentBudget } from "@/actions/budget";
 import { BudgetsLimitsClient } from "./_components/budgets-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function BudgetsPage() {
   const [accounts, transactions] = await Promise.all([
     getUserAccounts(),

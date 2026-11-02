@@ -55,7 +55,11 @@ export function CreateAccountDrawer({ children }) {
   } = useFetch(createAccount);
 
   const onSubmit = async (data) => {
-    await createAccountFn(data);
+    const formattedData = {
+      ...data,
+      balance: data.balance && data.balance.trim() !== "" ? data.balance.trim() : "0",
+    };
+    await createAccountFn(formattedData);
   };
 
   useEffect(() => {
@@ -126,12 +130,17 @@ export function CreateAccountDrawer({ children }) {
             </div>
 
             <div className="space-y-1.5">
-              <label
-                htmlFor="balance"
-                className="text-[10px] font-mono uppercase tracking-wider text-[#8E8E93]"
-              >
-                Initial Balance (USD)
-              </label>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="balance"
+                  className="text-[10px] font-mono uppercase tracking-wider text-[#8E8E93]"
+                >
+                  Initial Balance (USD) · Optional
+                </label>
+                <span className="text-[10px] font-mono text-[#71727A]">
+                  Defaults to $0.00
+                </span>
+              </div>
               <Input
                 id="balance"
                 type="number"

@@ -9,8 +9,8 @@ module.exports = {
   theme: {
   	extend: {
   		fontFamily: {
-  			serif: ["var(--font-serif)", "Newsreader", "Playfair Display", "Georgia", "serif"],
-  			sans: ["var(--font-sans)", "Inter", "sans-serif"],
+  			serif: ["Newsreader", "var(--font-serif)", "Playfair Display", "Georgia", "serif"],
+  			sans: ["Inter", "var(--font-sans)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
   		},
   		colors: {
   			ledger: {

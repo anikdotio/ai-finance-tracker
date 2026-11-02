@@ -176,3 +176,66 @@ export async function updateDefaultAccount(accountId) {
     };
   }
 }
+
+export async function deleteAccount(accountId) {
+  try {
+    const { userId } = await auth();
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
+
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const targetAccount = await db.account.findUnique({
+      where: {
+        id: accountId,
+        userId: user.id,
+      },
+    });
+
+    if (!targetAccount) {
+      throw new Error("Account not found");
+    }
+
+    await db.$transaction(async (tx) => {
+      // Delete the account (related transactions will cascade delete)
+      await tx.account.delete({
+        where: {
+          id: targetAccount.id,
+        },
+      });
+
+      // If the deleted account was the default account, set another account as default if any exist
+      if (targetAccount.isDefault) {
+        const nextAccount = await tx.account.findFirst({
+          where: { userId: user.id },
+          orderBy: { createdAt: "desc" },
+        });
+
+        if (nextAccount) {
+          await tx.account.update({
+            where: { id: nextAccount.id },
+            data: { isDefault: true },
+          });
+        }
+      }
+    });
+
+    revalidatePath("/dashboard");
+    revalidatePath("/account");
+    revalidatePath("/transaction");
+
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+}
