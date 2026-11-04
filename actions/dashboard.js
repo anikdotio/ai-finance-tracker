@@ -22,19 +22,6 @@ export async function getUserAccounts() {
   if (!userId) throw new Error("Unauthorized");
 
   try {
-    // TEMPORARY: Diagnose production database connection
-    const dbInfo = await db.$queryRaw`
-      SELECT
-        current_database() AS database_name,
-        current_schema() AS schema_name,
-        current_setting('search_path') AS search_path,
-        to_regclass('public.users')::text AS users_table,
-        to_regclass('public.accounts')::text AS accounts_table,
-        to_regclass('public.transactions')::text AS transactions_table,
-        to_regclass('public.budgets')::text AS budgets_table
-    `;
-
-    console.log("[PENNYPAL DB DIAGNOSTIC]", dbInfo);
     const accounts = await db.account.findMany({
       where: {
         user: {
