@@ -28,143 +28,159 @@
 
 ---
 
-# 📖 About
+## 📖 About
 
 Managing personal finances shouldn't be complicated.
 
-**PennyPal** is an AI-powered finance management platform that helps users track expenses, manage multiple accounts, monitor spending habits, and receive intelligent financial insights.
+**PennyPal** is an AI-powered personal finance management platform that helps users track expenses, manage multiple accounts, monitor spending habits, and receive intelligent financial insights.
 
-Designed with a clean UI and modern technologies, PennyPal combines automation, AI, and data visualization to make personal finance simple.
-
----
-
-# ✨ Features
-
-## 💳 Multi-Account Management
-
-- Create unlimited accounts
-- Multiple account types
-- Default account support
-- Real-time balance updates
+Built with modern web technologies, PennyPal combines automation, AI, and data visualization to make personal finance simpler and more accessible.
 
 ---
 
-## 💸 Expense & Income Tracking
+## ✨ Features
 
-- Add transactions effortlessly
-- Categorize expenses
-- Track income sources
-- Automatic balance calculations
+### 💳 Multi-Account Management
 
----
+- Create and manage multiple accounts.
+- Support for different account types.
+- Default account selection.
+- Automatic balance updates.
 
-## 📄 AI Receipt Scanner
+### 💸 Expense & Income Tracking
+
+- Add, edit, and manage transactions.
+- Categorize expenses and income.
+- Track income sources.
+- Automatic account balance calculations.
+- Support for recurring transactions.
+
+### 📄 AI Receipt Scanner
 
 Upload a receipt and let AI extract:
 
-- Merchant
-- Amount
-- Date
-- Category
+- Merchant name.
+- Transaction amount.
+- Date.
+- Category.
 
-No manual data entry required.
+Reduce manual data entry with AI-powered receipt processing.
 
----
+### 🤖 AI Financial Insights
 
-## 🤖 AI Financial Insights
-
-Powered by **Google Gemini**
+Powered by **Google Gemini**.
 
 Get intelligent insights about:
 
-- Spending patterns
-- Budget analysis
-- Financial trends
-- Smart recommendations
+- Spending patterns.
+- Budget analysis.
+- Financial trends.
+- Personalized recommendations.
 
----
+### 📊 Dashboard Analytics
 
-## 📊 Dashboard Analytics
+Visualize your financial activity through:
 
-Visualize your finances with
+- Transaction summaries.
+- Account balances.
+- Spending trends.
+- Category-wise breakdowns.
+- Financial overviews.
 
-- Transaction summaries
-- Account balances
-- Spending trends
-- Category breakdowns
+### 🔐 Secure Authentication
 
----
+Authentication powered by **Clerk**.
 
-## 🔐 Secure Authentication
+- Secure sign-up and login.
+- Session management.
+- Protected application routes.
+- Authenticated server-side operations.
 
-Authentication powered by **Clerk**
+### ⚡ Background Jobs
 
-- Secure Sign Up
-- Login
-- Session Management
-- Protected Routes
+Powered by **Inngest**.
 
----
+- Automated workflows.
+- Scheduled processing.
+- Asynchronous task execution.
+- Email automation.
 
-## ⚡ Background Jobs
+### 📧 Email Notifications
 
-Using **Inngest**
-
-- Automated workflows
-- Scheduled processing
-- Email automation
-- Async task execution
-
----
-
-## 📧 Email Notifications
-
-Powered by **Resend**
-
-Receive:
-
-- Monthly reports
-- Automated notifications
-- Financial summaries
-
----
-
-## 📧 Email Notifications
-
-Powered by **Resend**
+Powered by **Resend**.
 
 PennyPal supports automated email notifications, including:
 
-- 📊 Monthly financial reports
-- 💰 Budget summaries
-- 🔔 Important account notifications
-- 🤖 AI-generated financial insights
+- Monthly financial reports.
+- Budget summaries.
+- Important account notifications.
+- AI-generated financial insights.
 
-> **Note**
->
-> The live demo uses the **Resend Free Plan**.
-> Due to Resend's testing restrictions, emails can only be delivered to **verified email addresses** unless a custom domain is configured.
->
-> If you clone this project, simply:
->
-> 1. Create a Resend account.
-> 2. Generate your own API key.
-> 3. Verify your email address (or add a custom domain).
-> 4. Update `RESEND_API_KEY` in your `.env`.
->
-> After that, email functionality will work normally.
+> **Note:** The live demo uses the Resend Free Plan. Due to its testing restrictions, emails can only be delivered to verified email addresses unless a custom domain is configured.
 
-## 🛡️ Rate Limiting
+To enable email functionality in your own deployment:
 
-Implemented using **Arcjet**
+1. Create a Resend account.
+2. Generate an API key.
+3. Verify your email address or configure a custom domain.
+4. Add your `RESEND_API_KEY` to the environment variables.
 
-Protects APIs against abuse with token bucket rate limiting.
+### 🛡️ Rate Limiting & API Protection
+
+Implemented using **Arcjet**.
+
+- Protects application endpoints against abuse.
+- Implements token bucket rate limiting.
+- Adds an additional layer of API security.
 
 ---
 
-# 🏗 Tech Stack
+## 🛠️ Recent Improvements & Updates
 
-## Frontend
+PennyPal has undergone several improvements to enhance reliability, security, compatibility, and user experience.
+
+### UI & User Experience
+
+- Redesigned the application interface with a cleaner, more professional dark theme.
+- Improved dashboard and application layouts.
+- Refined the overall user experience while preserving existing backend functionality.
+
+### Backend & Database
+
+- Improved transaction creation and update validation.
+- Fixed a transaction amount type mismatch between frontend form data and backend Zod validation.
+- Improved transaction data handling and server-side validation.
+- Verified PostgreSQL database connectivity and core table availability through Prisma.
+
+### Next.js Compatibility
+
+- Fixed Next.js 15 asynchronous `searchParams` handling.
+- Added dynamic rendering to authenticated pages that depend on request-time data.
+- Updated transaction creation page handling to support asynchronous route parameters.
+
+### Security & API Improvements
+
+- Removed the public database seeding endpoint to prevent unauthorized access.
+- Refactored email functionality into a dedicated server-side utility.
+- Updated Arcjet to a stable release for API protection and rate limiting.
+
+### Infrastructure & Reliability
+
+- Added a health-check endpoint for deployment monitoring.
+- Configured periodic health checks using UptimeRobot.
+- Improved production build compatibility and deployment reliability.
+
+### Bug Fixes
+
+- Fixed transaction creation validation failures.
+- Resolved local database connectivity issues caused by an inactive Supabase project.
+- Addressed Next.js 15 dynamic API compatibility warnings.
+
+---
+
+## 🏗️ Tech Stack
+
+### Frontend
 
 - Next.js 15
 - React 19
@@ -172,56 +188,65 @@ Protects APIs against abuse with token bucket rate limiting.
 - Shadcn UI
 - Framer Motion
 
-## Backend
+### Backend
 
 - Next.js Server Actions
 - Prisma ORM
 - PostgreSQL
 
-## Authentication
+### Authentication
 
 - Clerk
 
-## AI
+### AI
 
 - Google Gemini
 
-## Background Jobs
+### Background Jobs
 
 - Inngest
 
-## Emails
+### Emails
 
 - Resend
 
-## Security
+### Security
 
 - Arcjet
 
-## Deployment
+### Deployment & Monitoring
 
 - Vercel
+- UptimeRobot
 
 ---
 
-# 📂 Project Structure
+## 📂 Project Structure
 
-```
+```text
 app/
-components/
+├── (auth)/
+├── (main)/
+├── api/
+├── lib/
+└── ...
+
 actions/
+components/
+data/
+hooks/
 lib/
 prisma/
 public/
-hooks/
-data/
 ```
 
 ---
 
-# 🚀 Getting Started
+## 🚀 Getting Started
 
-## Clone Repository
+Follow these steps to run PennyPal locally.
+
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/AnikKapat/ai-finance-tracker.git
@@ -229,171 +254,153 @@ git clone https://github.com/AnikKapat/ai-finance-tracker.git
 cd ai-finance-tracker
 ```
 
----
-
-## Install Dependencies
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
----
+### 3. Configure Environment Variables
 
-## Configure Environment Variables
+Create a `.env` file in the root directory.
 
-Create
-
-```
-.env
-```
-
-Add:
+Add the following environment variables:
 
 ```env
-DATABASE_URL=
-
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-
-ARCJET_KEY=
-
-GEMINI_API_KEY=
-
-RESEND_API_KEY=
-
-```
-
----
-
-## Prisma
-
-Generate Client
-
-```bash
-npx prisma generate
-```
-
-Run Migrations
-
-```bash
-npx prisma migrate deploy
-```
-
----
-
-## Start Development Server
-
-```bash
-npm run dev
-```
-
----
-
-## Production Build
-
-```bash
-npm run build
-```
-
-
-# 🔒 Security
-
-PennyPal includes:
-
-- Clerk Authentication
-- Protected Server Actions
-- Rate Limiting with Arcjet
-- Secure Database Access
-- Environment Variable Protection
-
----
-
-# 📈 Future Roadmap
-
-- Investment Portfolio Tracking
-- Savings Goals
-- Budget Planner
-- Recurring Transactions
-- Mobile App
-- Multi-currency Support
-- Bank API Integration
-- AI Chat Assistant
-- Dark/Light Theme Toggle
-
----
-
-# 🤝 Contributing
-
-Contributions are welcome.
-
-1. Fork the repository
-
-2. Create a feature branch
-
-```bash
-git checkout -b feature/my-feature
-```
-
-3. Commit changes
-
-```bash
-git commit -m "Add new feature"
-```
-
-4. Push
-
-```bash
-git push origin feature/my-feature
-```
-
-5. Open a Pull Request
-
----
-
-# 📜 License
-
-This project is licensed under the MIT License.
-
----
-
-# 👨‍💻 Developer
-
-### Anik Kapat
-
-Electronics & Communication Engineering
-
-Haldia Institute of Technology
-
-GitHub:
-https://github.com/AnikKapat
-
-
----
-
-<p align="center">
-
-⭐ If you found this project helpful, consider giving it a star!
-
-Made with ❤️ using Next.js, AI and a lot of ☕.
-
-</p>
-
-### Make sure to create a `.env` file with following variables -
-
-```
+# Database
 DATABASE_URL=
 DIRECT_URL=
 
+# Clerk Authentication
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
+
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/onboarding
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/onboarding
 
+# Google Gemini
 GEMINI_API_KEY=
 
+# Resend
 RESEND_API_KEY=
 
+# Arcjet
 ARCJET_KEY=
 ```
+
+**Important:**
+- Configure your own PostgreSQL database.
+- Use the appropriate connection strings for `DATABASE_URL` and `DIRECT_URL`.
+- Obtain your own Clerk, Gemini, Resend, and Arcjet credentials.
+- Never commit your `.env` file or expose secret keys publicly.
+
+### 4. Generate Prisma Client
+
+```bash
+npx prisma generate
+```
+
+### 5. Apply Database Migrations
+
+```bash
+npx prisma migrate deploy
+```
+
+Ensure your PostgreSQL database is configured correctly before running migrations.
+
+### 6. Start the Development Server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### 7. Create a Production Build
+
+```bash
+npm run build
+```
+
+---
+
+## 🔒 Security
+
+PennyPal incorporates multiple security measures:
+
+- **Clerk Authentication:** Secure user authentication and session management.
+- **Protected Server Actions:** Authentication checks for sensitive backend operations.
+- **Arcjet:** API protection and rate limiting.
+- **Environment Variables:** Sensitive credentials are kept outside the source code.
+- **Database Access:** PostgreSQL operations are handled through Prisma.
+- **Removed Public Seed Endpoint:** Prevents unauthorized database seeding through a public route.
+
+---
+
+## 📈 Future Roadmap
+
+Planned features and improvements:
+
+- Investment portfolio tracking.
+- Enhanced savings goals.
+- Advanced budget planning.
+- Multi-currency support.
+- Bank API integration.
+- AI-powered chat assistant.
+- Mobile application.
+- Dark/Light theme toggle.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository.
+2. Create a feature branch:
+
+```bash
+git checkout -b feature/my-feature
+```
+
+3. Commit your changes:
+
+```bash
+git commit -m "Add new feature"
+```
+
+4. Push your branch:
+
+```bash
+git push origin feature/my-feature
+```
+
+5. Open a Pull Request.
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 👨‍💻 Developer
+
+### Anik Kapat
+
+Electronics & Communication Engineering  
+Haldia Institute of Technology
+
+**GitHub:**  
+https://github.com/AnikKapat
+
+---
+
+<p align="center">
+  ⭐ If you found this project helpful, consider giving it a star!
+  <br/><br/>
+  Made with ❤️ using Next.js, AI and a lot of ☕.
+</p>
